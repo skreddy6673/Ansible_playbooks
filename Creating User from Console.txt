@@ -1,0 +1,29 @@
+---
+- hosts: all                                                                  # on all hosts mentioned in all file
+  become: true                                                                # become root
+  gather_facts: false                                                         #
+
+  vars_prompt:
+   - name: "UserName"
+     prompt: "Enter UserName"
+     private: no
+
+   - name: "Shell"
+     prompt: "Enter Shell for User"
+     private: no
+
+   - name: "Password"
+     prompt: "Enter Password"
+     private: yes
+
+  tasks:
+   - name: Create User
+     user:
+        name: "{{ UserName }}"
+        shell: "{{ Shell }}"
+        password: "{{ Password | password_hash('sha512') }}"
+     register: user                                                             # to display the results of the above task
+   - debug: var=user
+
+
+# creating user from console with prompts
