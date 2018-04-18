@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+  gather_facts: false
+
+  vars:
+	name: prasad
+	shell: /bin/bash
+	password: password
+
+  tasks:
+  - name: Create User
+    user:
+	name: "{{ name }}"
+	shell: "{{ shell }}"
+	password: "{{ password | password_hash('sha512') }}"
+
+
+
+# creating an user and encrypting the password using sha512
+
