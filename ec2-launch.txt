@@ -1,0 +1,26 @@
+---
+- name: Create an Ec2 Instance
+  hosts: localhost                  # as we are about to create a new host
+  gather_facts: false
+
+  vars:
+   keypair: Ansible_Demo.pem
+   instance_type: t2.micro
+   amiid: ami-4d202037
+   region: us-east-1
+
+  tasks:
+  - include_vars: aws_keys.txt
+  - name: Launch Instance
+    ec2:
+        key_name: "{{ keypair }}"
+        group: default
+        instance_type: "{{ instance_type }}"
+        image: "{{ amiid }}"
+        region: "{{ region }}"
+        wait: true
+        aws_access_key: "{{ ackey }}"
+        aws_secret_key: "{{ sekey }}"
+
+
+# launch a new ec2 from Ansible control server
