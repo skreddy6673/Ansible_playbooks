@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+  - name: Install Apache
+    yum:
+       name: httpd
+       state: latest
+
+  - name: Enable Apache boot level
+    service:
+       name: httpd
+       enabled: yes
+
+  - name: Start Apache Service
+    service:
+       name: httpd
+       state: started
+
+
+# To install Apache; enabling; and starting
