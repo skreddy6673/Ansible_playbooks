@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+  - name: Check Memory Size
+    command: free -m
+    register: mem
+    tags:
+     - memory
+  - debug: var=mem.stdout_lines
+
+  - name: Check Mount points
+    command: df -hT
+    register: disk
+    tags:
+     - disk
+  - debug: var=disk.stdout_lines
+
+  - name: Check Virtual Memory Status
+    command: vmstat
+    register: vm
+    tags:
+     - vm
+  - debug: var=vm.stdout_lines
+
+
+# commands to execute on remote machines
