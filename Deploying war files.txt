@@ -1,0 +1,15 @@
+---
+- name: Deploying Jenkins war file.
+  copy: 
+       src: "{{ role_path }}/files/jenkins.war"
+       dest: /usr/share/tomcat/webapps/
+  notify: restart tomcat
+
+- name: Deploying SAmple war file
+  copy:
+      src: "{{ role_path }}/files/sample.war"
+      dest: /usr/share/tomcat/webapps/
+  notify: restart tomcat
+
+
+# deploying war files to remote servers and starting them
